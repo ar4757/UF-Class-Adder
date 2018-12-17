@@ -21,10 +21,24 @@ Likely problems include:
 - Error if desired class time overlaps a class you already have
 - Program not tested on Windows or Linux
 
-## Dependencies
+## Linux Users
 
 This program relies on a combination of Google Chrome and the Chrome WebDriver, aka ChromeDriver 
 
 Windows and MacOS versions of ChromeDriver are included in the driver folder
 
 If on Linux, may have to download the correct version from https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+## Running/Building from Source
+
+Selenium is the only external dependency. One way to install is using:
+  > pip3 install selenium
+
+Running the program:
+  > python3 classadderchrome.py
+
+Building the program:
+  MacOS:
+    > pyinstaller --onefile --noconsole --add-binary driver/chromedriver:driver classadderchrome.py
+  Windows:
+    > pyinstaller --onefile --noconsole --add-binary driver/chromedriver.exe:driver classadderchrome.py
