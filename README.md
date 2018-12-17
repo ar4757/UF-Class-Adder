@@ -34,11 +34,11 @@ If on Linux, may have to download the correct version from https://sites.google.
 Selenium is the only external dependency. One way to install is using:
   > pip3 install selenium
 
-Running the program:
+### Running the program:
   > python3 classadderchrome.py
 
-Building the program:
-  MacOS:
-    > pyinstaller --onefile --noconsole --add-binary driver/chromedriver:driver classadderchrome.py
-  Windows:
-    > pyinstaller --onefile --noconsole --add-binary driver/chromedriver.exe:driver classadderchrome.py
+### Building the program:
+#### MacOS (.app)
+  > pyinstaller --onefile --noconsole --add-binary driver/chromedriver:driver classadderchrome.py
+#### Windows (.exe)
+  > pyinstaller --onefile --noconsole --add-binary driver/chromedriver.exe:driver classadderchrome.py
