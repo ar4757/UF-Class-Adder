@@ -10,16 +10,11 @@ Enter your UF username and password, and the course code of the desired class, a
 
 UF username is your GatorLink, not your UFID number. Also make sure course code is correct - valid examples include "MAC2311", "PHY2048", and "CHM2045".
 
-Upon receiving the "Class Added!" notification, you can end the program and check your schedule on ONE.UF. The class should be there.
-
-Pro Tip: Keep this on the down-low, and don't use it 24/7. Instead only use it when there's a decent chance someone will drop the class, aka drop/add week.
-
 ## Bugs
 
 Likely problems include:
 
 - Error if desired class time overlaps a class you already have
-- Program not tested on Windows or Linux
 
 ## Linux Users
 
@@ -41,4 +36,4 @@ Selenium is the only external dependency. One way to install is using:
 #### MacOS (.app)
   > pyinstaller --onefile --noconsole --add-binary driver/chromedriver:driver classadderchrome.py
 #### Windows (.exe)
-  > pyinstaller --onefile --noconsole --add-binary driver/chromedriver.exe:driver classadderchrome.py
+  > pyinstaller --onefile --noconsole --add-binary \driver\chromedriver.exe;\driver classadderchrome.py
