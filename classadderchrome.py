@@ -30,12 +30,12 @@ else:
 		chrome_driver = os.getcwd() + os.sep + "driver" + os.sep + "chromedriver"
 driver = None
 
-def start(username, password, course):
-	 thread = threading.Thread(target=addClass, args=(username, password, course))
+def start(username, password, course, section):
+	 thread = threading.Thread(target=addClass, args=(username, password, course, section))
 	 thread.setDaemon(True)
 	 thread.start()
 
-def addClass(username, password, course):
+def addClass(username, password, course, section):
 	global driver
 	driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver)
 	driver.get("https://one.uf.edu/shib/login")
@@ -61,6 +61,14 @@ def addClass(username, password, course):
 			try:
 				courseCode = wait.until(EC.presence_of_element_located((By.NAME, "courseCode")))
 				courseCode.clear()
+			except:
+				print("Timeout, retrying")
+				out.insert(END, "Timeout, retrying\n")
+				out.see(END)
+				continue
+			try:
+				classNum = wait.until(EC.presence_of_element_located((By.NAME, "classNum")))
+				classNum.clear()
 				break
 			except:
 				print("Timeout, retrying")
@@ -69,6 +77,7 @@ def addClass(username, password, course):
 				continue
 
 		courseCode.send_keys(course)
+		classNum.send_keys(section)
 		submit = driver.find_element_by_class_name("filter-sidebar-search-button")
 		submit.click()
 
@@ -111,23 +120,26 @@ master.title("UF Class Adder")
 Label(master, text="Username").grid(row=0)
 Label(master, text="Password").grid(row=1)
 Label(master, text="Course Code").grid(row=2)
+Label(master, text="Section Number").grid(row=3)
 
 e1 = Entry(master)
 e2 = Entry(master, show="*")
 e3 = Entry(master)
+e4 = Entry(master)
 
 e1.grid(row=0, column=1)
 e2.grid(row=1, column=1)
 e3.grid(row=2, column=1)
+e4.grid(row=3, column=1)
 
 out = ScrolledText(master, width=50, height=10)
 out.grid(row=0,column=2,rowspan=1000)
 
-submitButton = Button(master, text="Submit", width=10, command=lambda:start(e1.get(), e2.get(), e3.get()))
-submitButton.grid(row=3, column=1)
+submitButton = Button(master, text="Submit", width=10, command=lambda:start(e1.get(), e2.get(), e3.get(), e4.get()))
+submitButton.grid(row=4, column=1)
 
 cancelButton = Button(master, text="Cancel", width=10, command=quit)
-cancelButton.grid(row=4, column=1)
+cancelButton.grid(row=5, column=1)
 
 master.mainloop()
 
