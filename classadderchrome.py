@@ -30,12 +30,12 @@ else:
 		chrome_driver = os.getcwd() + os.sep + "driver" + os.sep + "chromedriver"
 driver = None
 
-def start(username, password, course, section):
-	 thread = threading.Thread(target=addClass, args=(username, password, course, section))
+def start(username, password, course, section, semester):
+	 thread = threading.Thread(target=addClass, args=(username, password, course, section, semester))
 	 thread.setDaemon(True)
 	 thread.start()
 
-def addClass(username, password, course, section):
+def addClass(username, password, course, section, semester):
 	global driver
 	driver = webdriver.Chrome(options=chrome_options, executable_path=chrome_driver)
 	driver.get("https://one.uf.edu/shib/login")
@@ -50,12 +50,12 @@ def addClass(username, password, course, section):
 	submit = driver.find_element_by_id("submit")
 	submit.click()
 
-	driver.get("https://one.uf.edu/myschedule/2191")
+	driver.get("https://one.uf.edu/myschedule/" + semester)
 	time.sleep(3)
 
 	wait = WebDriverWait(driver, 5)
 	while True:
-		driver.get("https://one.uf.edu/soc/registration-search/2191")
+		driver.get("https://one.uf.edu/soc/registration-search/" + semester)
 
 		while True:
 			try:
@@ -121,25 +121,34 @@ Label(master, text="Username").grid(row=0)
 Label(master, text="Password").grid(row=1)
 Label(master, text="Course Code").grid(row=2)
 Label(master, text="Section Number").grid(row=3)
+Label(master, text="Semester").grid(row=4)
 
 e1 = Entry(master)
 e2 = Entry(master, show="*")
 e3 = Entry(master)
 e4 = Entry(master)
 
+semesterVal = StringVar()
+semesterVal.set("2918")
+
+e5 = Radiobutton(master, text="Summer 2019", variable=semesterVal, value=2195)
+e6 = Radiobutton(master, text="Fall 2019", variable=semesterVal, value=2198)
+
 e1.grid(row=0, column=1)
 e2.grid(row=1, column=1)
 e3.grid(row=2, column=1)
 e4.grid(row=3, column=1)
+e5.grid(row=4, column=1)
+e6.grid(row=5, column=1)
 
 out = ScrolledText(master, width=50, height=10)
 out.grid(row=0,column=2,rowspan=1000)
 
-submitButton = Button(master, text="Submit", width=10, command=lambda:start(e1.get(), e2.get(), e3.get(), e4.get()))
-submitButton.grid(row=4, column=1)
+submitButton = Button(master, text="Submit", width=10, command=lambda:start(e1.get(), e2.get(), e3.get(), e4.get(), semesterVal.get()))
+submitButton.grid(row=6, column=1)
 
 cancelButton = Button(master, text="Cancel", width=10, command=quit)
-cancelButton.grid(row=5, column=1)
+cancelButton.grid(row=7, column=1)
 
 master.mainloop()
 
