@@ -129,17 +129,15 @@ e3 = Entry(master)
 e4 = Entry(master)
 
 semesterVal = StringVar()
-semesterVal.set("2918")
+semesterVal.set("2201")
 
-e5 = Radiobutton(master, text="Summer 2019", variable=semesterVal, value=2195)
-e6 = Radiobutton(master, text="Fall 2019", variable=semesterVal, value=2198)
+e5 = Radiobutton(master, text="Spring 2020", variable=semesterVal, value=2201)
 
 e1.grid(row=0, column=1)
 e2.grid(row=1, column=1)
 e3.grid(row=2, column=1)
 e4.grid(row=3, column=1)
 e5.grid(row=4, column=1)
-e6.grid(row=5, column=1)
 
 out = ScrolledText(master, width=50, height=10)
 out.grid(row=0,column=2,rowspan=1000)
